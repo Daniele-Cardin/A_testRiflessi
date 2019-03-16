@@ -21,18 +21,28 @@ void loop() {
   // put your main code here, to run repeatedly:
   int tempoLed = random(1000, 7000);
   int tempoBuzzer = random(1000, 7000);
+  lcd.setCursor(0,0);
+  lcd.print("Be ready for the");
+  lcd.setCursor(0,1);
+  lcd.print("led");
   delay(tempoLed);
   tempoPled = millis();
   digitalWrite(7,HIGH);
   while (digitalRead(5) == HIGH){  
   }
+  lcd.clear();
   tempoPled = millis() - tempoPled;
   digitalWrite(7,LOW);
+  lcd.setCursor(0,0);
+  lcd.print("Be ready for the");
+  lcd.setCursor(0,1);
+  lcd.print("buzzer");
   delay(tempoBuzzer);
   tempoPbuzzer = millis();
   tone(6, 1000);
   while (digitalRead(5) == HIGH){  
   }
+  lcd.clear();
   tempoPbuzzer = millis() - tempoPbuzzer;
   tone(6, 1000, 1);
   lcd.setCursor(0,0);
@@ -44,7 +54,6 @@ void loop() {
     lcd.setCursor(7,0);
     lcd.print("good");  
   }
-  //ciao
   else
   {
     lcd.setCursor(7,0);
@@ -61,4 +70,5 @@ void loop() {
     lcd.print("bad");
   }
   delay(10000);
+  lcd.clear();
 }
