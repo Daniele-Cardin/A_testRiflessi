@@ -22,6 +22,13 @@ void loop() {
   int tempoLed = random(1000, 7000);
   int tempoBuzzer = random(1000, 7000);
   lcd.setCursor(0,0);
+  lcd.print("Per avviare il");
+  lcd.setCursor(0,0);
+  lcd.print("test");
+  while (digitalRead(5) == HIGH){
+  }
+  lcd.clear();
+  lcd.setCursor(0,0);
   lcd.print("Be ready for the");
   lcd.setCursor(0,1);
   lcd.print("led");
