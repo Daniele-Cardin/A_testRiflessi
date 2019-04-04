@@ -11,62 +11,71 @@
   int pinLed = 7;
   int pinBuzzer = 6;
   LiquidCrystal lcd(0,1,8,9,10,11);
+  //variables and lcd initialization 
 void setup() {
   // put your setup code here, to run once:
   lcd.begin(16,2);
   pinMode(pinBottone, INPUT);
   digitalWrite(pinBottone, HIGH);
+  //pullUp
   pinMode(pinLed, OUTPUT);
   pinMode(pinBuzzer,OUTPUT);
+  //buzzer and led pins
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void inizioBottone(int bottone)
+{
   lcd.setCursor(0,0);
   lcd.print("Press the button"),
   lcd.setCursor(0,1);
-  lcd.print("to start")
-  while (digitalRead(5) == HIGH){
+  lcd.print("to start");
+  while (digitalRead(bottone) == HIGH){
   }
   lcd.clear();
-  int tempoLed = random(1000, 7000);
-  int tempoBuzzer = random(1000, 7000);
-  lcd.setCursor(0,0);
-  lcd.print("Per avviare il");
-  lcd.setCursor(0,0);
-  lcd.print("test");
-  while (digitalRead(pinBottone) == HIGH){
-  }
-  lcd.clear();
+}
+//press the button to start
+
+void ledReaction(int tLed, int pLed, int pBottone)
+{
   lcd.setCursor(0,0);
   lcd.print("Be ready for the");
   lcd.setCursor(0,1);
   lcd.print("led");
-  delay(tempoLed);
+  delay(tLed);
   tempoPled = millis();
-  digitalWrite(pinLed,HIGH);
-  while (digitalRead(pinBottone) == HIGH){  
+  digitalWrite(pLed,HIGH);
+  while (digitalRead(pBottone) == HIGH){  
   }
   lcd.clear();
   tempoPled = millis() - tempoPled;
-  digitalWrite(pinLed,LOW);
+  digitalWrite(pLed,LOW);
+}
+//reaction to the led
+
+void buzzerReaction(int tBuzzer, int pBuzzer, int pBottone)
+{
   lcd.setCursor(0,0);
   lcd.print("Be ready for the");
   lcd.setCursor(0,1);
   lcd.print("buzzer");
-  delay(tempoBuzzer);
+  delay(tBuzzer);
   tempoPbuzzer = millis();
-  tone(pinBuzzer, 1000);
-  while (digitalRead(pinBottone) == HIGH){  
+  tone(pBuzzer, 1000);
+  while (digitalRead(pBottone) == HIGH){  
   }
   lcd.clear();
   tempoPbuzzer = millis() - tempoPbuzzer;
-  tone(pinBuzzer, 1000, 1);
-  lcd.setCursor(0,0);
-  lcd.print(tempoPled);
+  tone(pBuzzer, 1000, 1);
+}
+//reaction to the buzzer
+
+void lcdWrite(int tPled, int tPbuzzer)
+{
+    lcd.setCursor(0,0);
+  lcd.print(tPled);
   lcd.setCursor(0,1);
-  lcd.print(tempoPbuzzer);
-  if (tempoPled < 250)
+  lcd.print(tPbuzzer);
+  if (tPled < 250)
   {
     lcd.setCursor(7,0);
     lcd.print("good");  
@@ -76,7 +85,7 @@ void loop() {
     lcd.setCursor(7,0);
     lcd.print("bad");
   }
-  if (tempoPbuzzer < 250)
+  if (tPbuzzer < 250)
   {
     lcd.setCursor(7,1);
     lcd.print("good");  
@@ -88,4 +97,13 @@ void loop() {
   }
   delay(5000);
   lcd.clear();
+}
+void loop() {
+  // put your main code here, to run repeatedly
+  
+  inizioBottone(pinBottone);
+  //random times
+  ledReaction(tempoLed, pinLed, pinBottone);
+  buzzerReaction(tempoBuzzer, pinBuzzer, pinBottone);
+  lcdWrite(tempoPled, tempoPbuzzer);
 }
